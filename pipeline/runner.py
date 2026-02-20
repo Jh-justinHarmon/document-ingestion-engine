@@ -55,7 +55,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     file_size = len(raw_bytes)
     
     duration_ms = round((time.perf_counter() - start) * 1000, 1)
-    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
+    if duration_ms == 0.0:
+        duration_ms = 0.1
     stage_results.append(StageResult(
         stage_name="Intake",
         duration_ms=duration_ms,
@@ -75,7 +76,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
         raise ValueError(f"Failed to parse file: {e}")
     
     duration_ms = round((time.perf_counter() - start) * 1000, 1)
-    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
+    if duration_ms == 0.0:
+        duration_ms = 0.1
     stage_results.append(StageResult(
         stage_name="Parse",
         duration_ms=duration_ms,
@@ -93,7 +95,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     normalized_text = '\n'.join(normalized_lines)
     
     duration_ms = round((time.perf_counter() - start) * 1000, 1)
-    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
+    if duration_ms == 0.0:
+        duration_ms = 0.1
     stage_results.append(StageResult(
         stage_name="Normalize",
         duration_ms=duration_ms,
@@ -122,7 +125,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     compression_pct = round((1 - (optimized_tokens / raw_tokens)) * 100, 1) if raw_tokens > 0 else 0.0
     
     duration_ms = round((time.perf_counter() - start) * 1000, 1)
-    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
+    if duration_ms == 0.0:
+        duration_ms = 0.1
     stage_results.append(StageResult(
         stage_name="Optimize",
         duration_ms=duration_ms,
@@ -145,7 +149,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     cost_saved = cost_raw - cost_optimized
     
     duration_ms = round((time.perf_counter() - start) * 1000, 1)
-    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
+    if duration_ms == 0.0:
+        duration_ms = 0.1
     stage_results.append(StageResult(
         stage_name="Cost Analysis",
         duration_ms=duration_ms,
