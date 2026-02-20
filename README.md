@@ -9,6 +9,8 @@ Deterministic 8-stage document ingestion pipeline with:
 
 Designed as a falsifiable engineering artifact for interview demonstration.
 
+**Note:** This CLI demo represents a simplified 5-stage subset of a larger 8-stage deterministic ingestion architecture.
+
 ## Demo
 
 ```bash

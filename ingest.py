@@ -41,13 +41,13 @@ def format_cli_card(results: dict) -> str:
         # Format stage line with dotted spacing
         stage_line = f"[Stage {i}: {stage_name}]"
         dots = "." * (40 - len(stage_line))
-        lines.append(f"{stage_line} {dots} {duration:.0f}ms")
+        lines.append(f"{stage_line} {dots} {duration:.1f}ms")
         
         # Add metrics if present
         if stage['metrics']:
             for key, value in stage['metrics'].items():
-                if key == 'compression_ratio':
-                    lines.append(f"    {key}: {value:.0%}")
+                if key == 'compression_pct':
+                    lines.append(f"    compression: {value:.1f}%")
                 elif key.startswith('cost_'):
                     lines.append(f"    {key}: ${value:.6f}")
                 elif 'tokens' in key:
@@ -63,7 +63,7 @@ def format_cli_card(results: dict) -> str:
     summary = results['summary']
     lines.append(f"Raw tokens:        {summary['raw_tokens']:,}")
     lines.append(f"Optimized tokens:  {summary['optimized_tokens']:,}")
-    lines.append(f"Compression:       {summary['compression_ratio']:.0%}")
+    lines.append(f"Compression:       {summary['compression_pct']:.1f}%")
     lines.append(f"Cost (raw):        ${summary['cost_raw']:.6f}")
     lines.append(f"Cost (optimized):  ${summary['cost_optimized']:.6f}")
     lines.append(f"Cost saved:        ${summary['cost_saved']:.6f}")

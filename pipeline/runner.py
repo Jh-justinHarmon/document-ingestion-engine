@@ -54,7 +54,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     raw_bytes = file_path_obj.read_bytes()
     file_size = len(raw_bytes)
     
-    duration_ms = (time.perf_counter() - start) * 1000
+    duration_ms = round((time.perf_counter() - start) * 1000, 1)
+    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
     stage_results.append(StageResult(
         stage_name="Intake",
         duration_ms=duration_ms,
@@ -73,7 +74,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     except Exception as e:
         raise ValueError(f"Failed to parse file: {e}")
     
-    duration_ms = (time.perf_counter() - start) * 1000
+    duration_ms = round((time.perf_counter() - start) * 1000, 1)
+    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
     stage_results.append(StageResult(
         stage_name="Parse",
         duration_ms=duration_ms,
@@ -90,7 +92,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     normalized_lines = [line.strip() for line in lines if line.strip()]
     normalized_text = '\n'.join(normalized_lines)
     
-    duration_ms = (time.perf_counter() - start) * 1000
+    duration_ms = round((time.perf_counter() - start) * 1000, 1)
+    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
     stage_results.append(StageResult(
         stage_name="Normalize",
         duration_ms=duration_ms,
@@ -114,22 +117,25 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     )
     
     optimized_tokens = optimized.stats.compressed_tokens
-    compression_ratio = optimized.stats.compression_ratio
     
-    duration_ms = (time.perf_counter() - start) * 1000
+    # Calculate compression percentage from token counts
+    compression_pct = round((1 - (optimized_tokens / raw_tokens)) * 100, 1) if raw_tokens > 0 else 0.0
+    
+    duration_ms = round((time.perf_counter() - start) * 1000, 1)
+    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
     stage_results.append(StageResult(
         stage_name="Optimize",
         duration_ms=duration_ms,
         metrics={
             "raw_tokens": raw_tokens,
             "optimized_tokens": optimized_tokens,
-            "compression_ratio": compression_ratio,
+            "compression_pct": compression_pct,
             "strategy": optimized.stats.strategy_used.value
         }
     ))
     
     # =========================================================================
-    # STAGE 5: OUTPUT
+    # STAGE 5: COST ANALYSIS
     # =========================================================================
     start = time.perf_counter()
     
@@ -138,9 +144,10 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     cost_optimized = estimate_cost(optimized_tokens, 0, model)
     cost_saved = cost_raw - cost_optimized
     
-    duration_ms = (time.perf_counter() - start) * 1000
+    duration_ms = round((time.perf_counter() - start) * 1000, 1)
+    duration_ms = max(duration_ms, 1.0)  # Minimum 1ms display
     stage_results.append(StageResult(
-        stage_name="Output",
+        stage_name="Cost Analysis",
         duration_ms=duration_ms,
         metrics={
             "cost_raw": cost_raw,
@@ -169,7 +176,7 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
         "summary": {
             "raw_tokens": raw_tokens,
             "optimized_tokens": optimized_tokens,
-            "compression_ratio": compression_ratio,
+            "compression_pct": compression_pct,
             "cost_raw": cost_raw,
             "cost_optimized": cost_optimized,
             "cost_saved": cost_saved
