@@ -48,6 +48,8 @@ def format_cli_card(results: dict) -> str:
             for key, value in stage['metrics'].items():
                 if key == 'compression_pct':
                     lines.append(f"    compression: {value:.1f}%")
+                elif key == 'accuracy':
+                    lines.append(f"    accuracy: {value:.3f}")
                 elif key.startswith('cost_'):
                     lines.append(f"    {key}: ${value:.6f}")
                 elif 'tokens' in key:
@@ -67,6 +69,8 @@ def format_cli_card(results: dict) -> str:
     lines.append(f"Cost (raw):        ${summary['cost_raw']:.6f}")
     lines.append(f"Cost (optimized):  ${summary['cost_optimized']:.6f}")
     lines.append(f"Cost saved:        ${summary['cost_saved']:.6f}")
+    lines.append(f"Accuracy:          {summary['benchmark_accuracy']:.3f}")
+    lines.append(f"Strategy chosen:   {summary['benchmark_strategy']}")
     lines.append("")
     
     return "\n".join(lines)

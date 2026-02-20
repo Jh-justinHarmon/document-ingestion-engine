@@ -162,6 +162,28 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
     ))
     
     # =========================================================================
+    # STAGE 6: BENCHMARK
+    # =========================================================================
+    start = time.perf_counter()
+    
+    from .benchmark import run_benchmark
+    
+    # Run benchmark comparison
+    benchmark_result = run_benchmark(normalized_text, optimized.compressed, model)
+    
+    duration_ms = round((time.perf_counter() - start) * 1000, 1)
+    if duration_ms == 0.0:
+        duration_ms = 0.1
+    stage_results.append(StageResult(
+        stage_name="Benchmark",
+        duration_ms=duration_ms,
+        metrics={
+            "accuracy": benchmark_result.accuracy,
+            "strategy": benchmark_result.strategy
+        }
+    ))
+    
+    # =========================================================================
     # ASSEMBLE FINAL RESULTS
     # =========================================================================
     
@@ -184,6 +206,8 @@ def run_pipeline(file_path: str, doc_type: str, model: str = "gpt-4o-mini") -> D
             "compression_pct": compression_pct,
             "cost_raw": cost_raw,
             "cost_optimized": cost_optimized,
-            "cost_saved": cost_saved
+            "cost_saved": cost_saved,
+            "benchmark_accuracy": benchmark_result.accuracy,
+            "benchmark_strategy": benchmark_result.strategy
         }
     }
