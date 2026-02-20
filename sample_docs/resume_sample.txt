@@ -1,0 +1,51 @@
+JUSTIN HARMON
+Software Engineer | AI/ML Specialist
+justin@example.com | (555) 123-4567 | San Francisco, CA
+
+SUMMARY
+Senior software engineer with 8+ years of experience building scalable AI systems and production infrastructure. Expert in Python, distributed systems, and LLM optimization. Led teams delivering high-impact products used by millions.
+
+EXPERIENCE
+
+Senior Software Engineer | TechCorp Inc. | 2020 - Present
+- Architected and deployed document ingestion pipeline processing 10M+ documents/month
+- Reduced token costs by 70% through intelligent compression strategies
+- Built real-time optimization engine handling 50K requests/second
+- Led team of 5 engineers delivering production ML systems
+
+Software Engineer | StartupXYZ | 2018 - 2020
+- Developed core API infrastructure serving 1M+ daily active users
+- Implemented caching layer reducing database load by 60%
+- Built automated testing framework improving deployment confidence
+- Mentored junior engineers on best practices and code quality
+
+Junior Developer | WebSolutions LLC | 2016 - 2018
+- Created customer-facing web applications using React and Node.js
+- Optimized database queries reducing page load times by 40%
+- Collaborated with design team on UX improvements
+
+EDUCATION
+
+B.S. Computer Science | University of California, Berkeley | 2016
+- GPA: 3.8/4.0
+- Dean's List all semesters
+- Teaching Assistant for Data Structures course
+
+SKILLS
+
+Languages: Python, JavaScript, TypeScript, Go, SQL
+Frameworks: FastAPI, React, Node.js, PyTorch, TensorFlow
+Tools: Docker, Kubernetes, AWS, PostgreSQL, Redis
+Specialties: LLM optimization, distributed systems, API design, cost reduction
+
+PROJECTS
+
+Token Optimizer (Open Source)
+- Built compression engine reducing LLM context by 60-80%
+- Supports multiple strategies: extractive, abstractive, hierarchical
+- Used by 500+ developers, 2K+ GitHub stars
+
+Document Ingestion Engine
+- Deterministic 8-stage pipeline with provenance tracking
+- Cost measurement and accuracy benchmarking
+- Designed for interview demonstration and production use
