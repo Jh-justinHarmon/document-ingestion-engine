@@ -1,28 +1,92 @@
 # Document Ingestion Engine
 
-Deterministic 8-stage document ingestion pipeline with:
+## Why I Built This
 
-- Token optimization (60–80% compression)
-- Cost delta measurement
-- Accuracy benchmarking
-- Reproducible run artifacts
+Most LLM demos show that something works once. I wanted to build a pipeline that measures whether it works **consistently, cheaply, and reproducibly**.
+This project is a deterministic document ingestion pipeline designed to measure token cost, compression, and accuracy across runs, not just produce output.
 
-Designed as a falsifiable engineering artifact for interview demonstration.
+The goal was to treat LLM ingestion like an engineering system, not a prompt.
 
-**Note:** This CLI demo represents a simplified 5-stage subset of a larger 8-stage deterministic ingestion architecture.
+---
 
-## Demo
+## What This Is
+
+A deterministic, multi-stage document ingestion pipeline that:
+
+* Reduces tokens before LLM processing
+* Measures cost deltas from optimization
+* Benchmarks extraction accuracy
+* Produces reproducible run artifacts
+* Generates a deterministic run ID for traceability
+
+This CLI demo represents a simplified **5-stage subset** of a larger **8-stage ingestion architecture**.
+
+---
+
+## What It Demonstrates
+
+This project is meant to demonstrate engineering thinking around LLM systems:
+
+* Token reduction and cost control
+* Deterministic processing
+* Measurement over intuition
+* Accuracy benchmarking
+* Reproducible artifacts
+* Pipeline architecture (not just API calls)
+
+The focus is not the model — it’s the **system around the model**.
+
+---
+
+## How to Run the Demo
 
 ```bash
 python ingest.py sample_docs/resume_sample.pdf
 ```
 
-Displays:
+---
 
-- Stage execution timing
-- Raw vs optimized token counts
-- Compression %
-- Cost delta
-- Accuracy score
-- Deterministic run ID
-- Output artifact path
+## Example Output
+
+The pipeline prints:
+
+* Stage execution timing
+* Raw vs optimized token counts
+* Compression %
+* Cost delta
+* Accuracy score
+* Deterministic run ID
+* Output artifact path
+
+This shows whether optimization actually reduces cost and whether extraction accuracy is maintained after compression.
+
+---
+
+## Architecture (High Level)
+
+The full system is an **8-stage deterministic ingestion pipeline** designed to be:
+
+* Deterministic
+* Measurable
+* Reproducible
+* Inspectable
+
+The CLI demo runs a simplified 5-stage version, but the architecture supports full pipeline benchmarking and artifact generation for each stage.
+
+---
+
+## Repo Structure
+
+If you're reviewing the code, start here:
+
+* `ingest.py` — CLI entry point and pipeline runner
+* `stages/` — Individual pipeline stages
+* `metrics/` — Token, cost, and accuracy measurement
+* `artifacts/` — Reproducible run outputs
+* `sample_docs/` — Example input documents
+
+---
+
+## What This Project Is (In One Sentence)
+
+This project shows that I don’t just call LLM APIs — I build systems that **measure, control, and reproduce** their behavior.
